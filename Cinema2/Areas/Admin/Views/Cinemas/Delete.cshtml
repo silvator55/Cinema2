@@ -1,0 +1,26 @@
+﻿@model Cinema2.Models.Cinema
+
+@{
+    ViewData["Title"] = "تأكيد الحذف";
+}
+
+<div class="card shadow-sm border-0 my-4" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-header bg-danger text-white py-3">
+        <h5 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>تأكيد حذف السينما</h5>
+    </div>
+    <div class="card-body p-4 text-center">
+        <p class="fs-5">هل أنت تأكد من رغبتك في حذف هذه السينما؟</p>
+        <h4 class="fw-bold text-dark mb-3">@Model.Name</h4>
+
+        @if (!string.IsNullOrEmpty(Model.CinemaImg))
+        {
+            <img src="@Model.CinemaImg" alt="@Model.Name" class="img-thumbnail mb-3" style="max-width: 150px;" />
+        }
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger fw-bold me-2"><i class="bi bi-trash me-1"></i> تأكيد الحذف</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle me-1"></i> إلغاء</a>
+        </form>
+    </div>
+</div>

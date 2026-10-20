@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Cinema2.Models.Category>
+
+@{
+    ViewData["Title"] = "التصنيفات";
+}
+
+<div class="card shadow-sm border-0 my-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+        <h5 class="mb-0 text-warning"><i class="bi bi-tags-fill me-2"></i>قائمة التصنيفات</h5>
+        <a asp-action="Create" class="btn btn-warning btn-sm fw-bold">
+            <i class="bi bi-plus-circle me-1"></i> إضافة تصنيف جديد
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-center" style="width: 80px;">#</th>
+                        <th>اسم التصنيف</th>
+                        <th class="text-center" style="width: 200px;">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int index = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center fw-bold">@(index++)</td>
+                                <td class="fw-semibold">@item.Name</td>
+                                <td class="text-center">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm me-1">
+                                        <i class="bi bi-pencil-square"></i> تعديل
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash"></i> حذف
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-muted">لا توجد تصنيفات حالياً. قم بإضافة تصنيف جديد.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

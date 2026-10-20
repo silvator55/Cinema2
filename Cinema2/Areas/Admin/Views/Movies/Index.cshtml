@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Cinema2.Models.Movie>
+
+@{
+    ViewData["Title"] = "قائمة الأفلام";
+}
+
+<div class="container-fluid my-4">
+    @if (TempData["Success"] != null)
+    {
+        <div id="alertMessage" class="alert alert-success alert-dismissible fade show text-end fw-bold shadow-sm mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div id="alertMessage" class="alert alert-danger alert-dismissible fade show text-end fw-bold shadow-sm mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 my-4">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 text-warning"><i class="bi bi-film me-2"></i>قائمة الأفلام</h5>
+            <a asp-action="Create" class="btn btn-warning btn-sm fw-bold">
+                <i class="bi bi-plus-circle me-1"></i> إضافة فيلم جديد
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="width: 60px;">#</th>
+                            <th>البوستر</th>
+                            <th>اسم الفيلم</th>
+                            <th>التصنيف</th>
+                            <th>السينما</th>
+                            <th>السعر</th>
+                            <th>موعد العرض</th>
+                            <th class="text-center" style="width: 180px;">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int index = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center fw-bold">@(index++)</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.MainImg))
+                                        {
+                                            <img src="@item.MainImg" alt="@item.Name" class="rounded" style="width: 50px; height: 70px; object-fit: cover;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">لا توجد صورة</span>
+                                        }
+                                    </td>
+                                    <td class="fw-bold">@item.Name</td>
+                                    <td><span class="badge bg-secondary">@item.Category?.Name</span></td>
+                                    <td><span class="badge bg-info text-dark">@item.Cinema?.Name</span></td>
+                                    <td class="text-success fw-bold">@item.Price.ToString("C")</td>
+                                    <td>@item.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td class="text-center">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm me-1">
+                                            <i class="bi bi-pencil-square"></i> تعديل
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash"></i> حذف
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8" class="text-center py-4 text-muted">لا توجد أفلام معروضة حالياً. اضغط على إضافة فيلم جديد.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            var alertBox = document.getElementById('alertMessage');
+            if (alertBox) {
+                var alert = new bootstrap.Alert(alertBox);
+                alert.close();
+            }
+        }, 3000);
+    </script>
+}
