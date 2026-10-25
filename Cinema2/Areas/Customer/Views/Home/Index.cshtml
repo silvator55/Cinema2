@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Cinema2.Models.Movie>
+
+@{
+    ViewData["Title"] = "الرئيسية - الأفلام المتاحة";
+}
+
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-dark"><i class="bi bi-film text-warning me-2"></i>أحدث الأفلام المعروضة</h1>
+        <p class="text-muted">استعرض أحدث الأفلام واحجز تذكرتك الآن بكل سهولة</p>
+    </div>
+
+    <!-- استخدام الـ Row والـ Col بشكل صحيح عشان الأفلام تظهر جنب بعضها ككروت منظمة -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var movie in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <!-- بوستر الفيلم -->
+                        @if (!string.IsNullOrEmpty(movie.MainImg))
+                        {
+                            <img src="@movie.MainImg" class="card-img-top" alt="@movie.Name" style="height: 300px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <img src="~/images/default.png" class="card-img-top" alt="لا توجد صورة" style="height: 300px; object-fit: cover;" />
+                        }
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold text-dark">@movie.Name</h5>
+                            <p class="card-text text-muted small flex-grow-1">
+                                @if (!string.IsNullOrEmpty(movie.Description) && movie.Description.Length > 80)
+                                {
+                                    @movie.Description.Substring(0, 80) <text>...</text>
+                                }
+                                else
+                                {
+                                    @movie.Description
+                                }
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="badge bg-secondary">@movie.Category?.Name</span>
+                                <span class="text-success fw-bold fs-5">@movie.Price.ToString("C")</span>
+                            </div>
+                        </div>
+
+                        <!-- زرار الحجز معدل بالـ Url.Action الصريح عشان يظهر الرابط تحت ويفتح صفحة التفاصيل -->
+                        <div class="card-footer bg-white border-top-0 pb-3">
+                            <a href="@Url.Action("Details", "Home", new { area = "Customer", id = movie.Id })" class="btn btn-dark w-100 fw-bold">
+                                <i class="bi bi-ticket-perforated me-1"></i> احجز الآن
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-4">لا توجد أفلام متاحة للعرض حالياً.</p>
+            </div>
+        }
+    </div>
+</div>

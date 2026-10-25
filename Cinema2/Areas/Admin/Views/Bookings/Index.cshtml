@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Cinema2.Models.Booking>
+
+@{
+    ViewData["Title"] = "قائمة الحجوزات";
+}
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark"><i class="bi bi-ticket-detailed text-warning me-2"></i>إدارة الحجوزات</h2>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>رقم الحجز</th>
+                        <th>اسم العميل</th>
+                        <th>الفيلم المحجوز</th>
+                        <th>السعر</th>
+                        <th>تاريخ الحجز</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">#@item.Id</td>
+                                <td>@item.UserId</td>
+                                <td>@item.Movie?.Name</td>
+                                <td class="text-success fw-bold">@item.TotalPrice.ToString("C")</td>
+                                <td>@item.BookingDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">لا توجد أي حجوزات مسجلة حتى الآن.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

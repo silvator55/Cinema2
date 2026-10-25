@@ -1,4 +1,5 @@
 using Cinema2.Data;
+using Cinema2.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema2
@@ -13,6 +14,12 @@ namespace Cinema2
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<IMovieService, MovieService>();
+            builder.Services.AddScoped<ICinemaService, CinemaService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             var app = builder.Build();
 
@@ -37,8 +44,7 @@ namespace Cinema2
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Categories}/{action=Index}/{id?}",
-                defaults: new { area = "Admin", controller = "Categories", action = "Index" })
+                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

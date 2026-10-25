@@ -14,6 +14,7 @@ namespace Cinema2.Data
         public DbSet<MovieImage> MovieImages { get; set; }
         public DbSet<MovieActor> MovieActors { get; set; }
 
+        public DbSet<Booking> Bookings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
