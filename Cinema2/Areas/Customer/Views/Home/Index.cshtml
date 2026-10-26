@@ -10,7 +10,6 @@
         <p class="text-muted">استعرض أحدث الأفلام واحجز تذكرتك الآن بكل سهولة</p>
     </div>
 
-    <!-- استخدام الـ Row والـ Col بشكل صحيح عشان الأفلام تظهر جنب بعضها ككروت منظمة -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @if (Model != null && Model.Any())
         {
@@ -18,7 +17,6 @@
             {
                 <div class="col">
                     <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-                        <!-- بوستر الفيلم -->
                         @if (!string.IsNullOrEmpty(movie.MainImg))
                         {
                             <img src="@movie.MainImg" class="card-img-top" alt="@movie.Name" style="height: 300px; object-fit: cover;" />
@@ -47,7 +45,6 @@
                             </div>
                         </div>
 
-                        <!-- زرار الحجز معدل بالـ Url.Action الصريح عشان يظهر الرابط تحت ويفتح صفحة التفاصيل -->
                         <div class="card-footer bg-white border-top-0 pb-3">
                             <a href="@Url.Action("Details", "Home", new { area = "Customer", id = movie.Id })" class="btn btn-dark w-100 fw-bold">
                                 <i class="bi bi-ticket-perforated me-1"></i> احجز الآن

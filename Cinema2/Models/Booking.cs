@@ -8,7 +8,7 @@ namespace Cinema2.Models
         [Key]
         public int Id { get; set; }
 
-        public string UserId { get; set; } // لو مفعل الـ Identity، أو ممكن نخليه اسم العميل مؤقتاً
+        public string UserId { get; set; } 
 
         public int MovieId { get; set; }
         [ForeignKey("MovieId")]

@@ -9,7 +9,6 @@ namespace Cinema2.Areas.Customer.Controllers
         private readonly IMovieService _movieService;
         private readonly IBookingService _bookingService;
 
-        // حقن التبعيات (Dependency Injection) لكل الخدمات المخصصة
         public HomeController(IMovieService movieService, IBookingService bookingService)
         {
             _movieService = movieService;
