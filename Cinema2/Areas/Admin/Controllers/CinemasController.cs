@@ -41,6 +41,7 @@ namespace Cinema2.Areas.Admin.Controllers
                     {
                         Directory.CreateDirectory(uploadsFolder);
                     }
+                    // ujhknjkghj
 
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
