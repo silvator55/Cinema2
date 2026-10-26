@@ -54,6 +54,7 @@ namespace Cinema2.Areas.Admin.Controllers
                     cinema.CinemaImg = "/images/cinemas/" + uniqueFileName;
                 }
 
+                // عمرمنسيت
                 _context.Cinemas.Add(cinema);
                 await _context.SaveChangesAsync();
 
