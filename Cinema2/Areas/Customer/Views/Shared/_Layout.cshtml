@@ -18,14 +18,69 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="customerNavbar">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-area="Customer" asp-controller="Home" asp-action="Index">الرئيسية</a>
-                        </li>
+
+                    @inject Microsoft.AspNetCore.Identity.SignInManager<Microsoft.AspNetCore.Identity.IdentityUser> SignInManager
+                    @inject Microsoft.AspNetCore.Identity.UserManager<Microsoft.AspNetCore.Identity.IdentityUser> UserManager
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">الرئيسية</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Movies" asp-action="Index">الأفلام</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Cinemas" asp-action="Index">السينمات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Categories" asp-action="Index">التصنيفات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Actors" asp-action="Index">الممثلين</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                    }
+
+                    <!-- isufisf -->
+                    <ul class="navbar-nav ms-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-1"></i> @User.Identity?.Name
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <form action="/Account/Logout" method="post">
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                تسجيل خروج
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">دخول</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-warning text-dark px-3 ms-2" asp-area="" asp-controller="Account" asp-action="Register">حساب جديد</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>[]
     </header>
 
     <div class="container mt-4">

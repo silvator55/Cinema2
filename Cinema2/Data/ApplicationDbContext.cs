@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 using Cinema2.Models;
 
 namespace Cinema2.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -13,8 +15,8 @@ namespace Cinema2.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
         public DbSet<MovieActor> MovieActors { get; set; }
-
         public DbSet<Booking> Bookings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

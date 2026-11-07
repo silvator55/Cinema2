@@ -1,4 +1,5 @@
 ﻿using Cinema2.Data;
+
 using Cinema2.Models;
 using Microsoft.EntityFrameworkCore;
 

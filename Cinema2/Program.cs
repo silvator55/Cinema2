@@ -1,5 +1,7 @@
 using Cinema2.Data;
 using Cinema2.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema2
@@ -15,7 +17,17 @@ namespace Cinema2
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.User.RequireUniqueEmail = true; 
+            })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<ICinemaService, CinemaService>();
@@ -33,19 +45,16 @@ namespace Cinema2
             app.UseStaticFiles();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
-            app.MapStaticAssets();
 
             app.MapControllerRoute(
                 name: "areas",
-                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                pattern: "{controller=Account}/{action=Register}/{id?}");
 
             app.Run();
         }

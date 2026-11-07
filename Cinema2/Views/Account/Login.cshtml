@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5" style="max-width: 400px;">
+    <h2 class="mb-4 text-center">تسجيل الدخول</h2>
+
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label class="form-label">البريد الإلكتروني أو اسم المستخدم</label>
+            <input type="text" name="inputModel" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">كلمة المرور</label>
+            <input type="password" name="password" class="form-control" required />
+        </div>
+
+        <div class="mb-3 text-end">
+            <a asp-action="ForgotPassword" class="text-decoration-none small">نسيت كلمة المرور؟</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">دخول</button>
+    </form>
+</div>
